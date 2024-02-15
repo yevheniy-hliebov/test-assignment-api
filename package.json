@@ -1,0 +1,35 @@
+{
+  "name": "ts-server-pg",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && node dist/server.js",
+    "dev": "nodemon",
+
+    "db": "docker-compose up --build -d",
+    "db:down": "docker-compose down",
+    "pull-db": "docker pull postgres",
+    
+    "migrate": "knex migrate:latest --knexfile knexconfig.ts",
+    "migrate:down": "knex migrate:down --knexfile knexconfig.ts",
+    "seed": "knex seed:run --knexfile knexconfig.ts"
+  },
+  "author": "yevheniy-hliebov <yevheniy.hliebov@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.4",
+    "express": "^4.18.2",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/pg": "^8.11.0",
+    "dotenv-cli": "^7.3.0",
+    "knex": "^3.1.0",
+    "nodemon": "^3.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

@@ -1,0 +1,14 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    container_name: ${POSTGRES_CONTAINER_NAME}
+    env_file:
+      - .env
+    ports:
+      - '${POSTGRES_PORT}:${POSTGRES_PORT_INTERNAL}'
+    volumes:
+      - POSTGRES_data:/var/lib/postgresql/data
+
+volumes:
+  POSTGRES_data:
