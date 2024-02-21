@@ -1,11 +1,14 @@
-import Knex, {Knex as iKnex} from "knex";
+import {Knex as iKnex} from "knex";
 
 export async function up(knex: iKnex): Promise<void> {
   await knex.schema.createTable('users', (table) => {
     table.increments('id').primary();
-    table.string('username').notNullable();
+    table.string('name').notNullable();
     table.string('email').notNullable();
-    table.timestamps(true, true);
+    table.string('phone');
+    table.integer('position_id').notNullable();
+    table.integer('registration_timestamp').notNullable();
+    table.string('photo');
   });
 }
 

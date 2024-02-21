@@ -1,31 +1,20 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import Knex from "knex";
-import configConnection from './configs/db.config';
-import { UserService } from './services/user.service';
+import HttpExceptionFilter from './middlewares/http-exception-filter.middleware';
+import userRouter from './routes/user.route';
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
 // routes
-app.get('/', (req, res) => {
+app.get('/health', (req, res) => {
   res.send('API Worked');
 });
+app.use('/users', userRouter);
 
-const knex = Knex(configConnection);
-const userService = new UserService(knex);
-
-app.get('/users', (req, res) => {
-  userService.getAllUsers()
-  .then((users) => {
-    res.status(200).json(users);
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-    res.sendStatus(500);
-  })
-})
+// middleware exceptions
+app.use(HttpExceptionFilter);
 
 const server = app.listen(process.env.PORT, () => {
   console.log('API Server up on port:', process.env.PORT);
