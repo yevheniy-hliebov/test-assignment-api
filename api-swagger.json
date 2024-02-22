@@ -1,0 +1,495 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/token": {
+      "get": {
+        "operationId": "token",
+        "tags": [
+          "Routes"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success": true,
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXRob2QiOiJyZWdpc3RyYXRpb24iLCJpYXQiOjE3MDg2MjQ2OTEsImV4cCI6MTcwODYyNzA5MX0.iXRVcIVCcecNnNWISS9GUzTVPPt64-0cp5ExCjGHsGI"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success": false,
+                    "message": "Internal Server Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "operationId": "get_users",
+        "tags": [
+          "Routes"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success": true,
+                    "total_users": 45,
+                    "page": 1,
+                    "total_pages": 8,
+                    "links": {
+                      "next_url": "http://localhost:4000/users?page=2&count=6",
+                      "prev_url": null
+                    },
+                    "count": 6,
+                    "users": [
+                      {
+                        "id": 45,
+                        "name": "Lilly",
+                        "email": "lilly.langosh@example.com",
+                        "phone": "+380485102710",
+                        "position_id": 2,
+                        "registration_timestamp": "1708538753",
+                        "photo": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/890.jpg",
+                        "position_name": "Designer"
+                      },
+                      {
+                        "id": 44,
+                        "name": "Margie",
+                        "email": "margie.brakus@example.com",
+                        "phone": "+380739436025",
+                        "position_id": 1,
+                        "registration_timestamp": "1706871501",
+                        "photo": "https://avatars.githubusercontent.com/u/43067501",
+                        "position_name": "Security"
+                      },
+                      {
+                        "id": 43,
+                        "name": "Roberto",
+                        "email": "roberto.schulist@example.com",
+                        "phone": "+380951652279",
+                        "position_id": 1,
+                        "registration_timestamp": "1704443272",
+                        "photo": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/319.jpg",
+                        "position_name": "Security"
+                      },
+                      {
+                        "id": 42,
+                        "name": "Tressa",
+                        "email": "tressa.parker@example.com",
+                        "phone": "+380989860223",
+                        "position_id": 3,
+                        "registration_timestamp": "1707884602",
+                        "photo": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/1149.jpg",
+                        "position_name": "Content manager"
+                      },
+                      {
+                        "id": 41,
+                        "name": "Kristopher",
+                        "email": "kristopher.bogisich@example.com",
+                        "phone": "+380944821415",
+                        "position_id": 3,
+                        "registration_timestamp": "1707138274",
+                        "photo": "https://avatars.githubusercontent.com/u/56069021",
+                        "position_name": "Content manager"
+                      },
+                      {
+                        "id": 40,
+                        "name": "Luther",
+                        "email": "luther.roberts@example.com",
+                        "phone": "+380685385782",
+                        "position_id": 3,
+                        "registration_timestamp": "1707154064",
+                        "photo": "https://avatars.githubusercontent.com/u/99324465",
+                        "position_name": "Content manager"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success": false,
+                    "message": "Validation failed",
+                    "fails": {
+                      "page": [
+                        "The page must be an integer."
+                      ],
+                      "count": [
+                        "The count must be an integer."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success": false,
+                    "message": "Internal Server Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "add_user",
+        "tags": [
+          "Routes"
+        ],
+        "parameters": [
+          {
+            "name": "Token",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "description": "Add user",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": true,
+                    "example": "Yevhenii"
+                  },
+                  "email": {
+                    "type": "string",
+                    "required": true,
+                    "example": "yevhenii@example.com"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "required": true,
+                    "example": "+380630000000"
+                  },
+                  "position_id": {
+                    "type": "string",
+                    "required": true,
+                    "example": "1"
+                  },
+                  "photo": {
+                    "type": "file",
+                    "required": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success": true,
+                    "user_id": 48,
+                    "message": "New user successfully registered"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success": false,
+                    "message": "Validation failed",
+                    "fails": {
+                      "name": [
+                        "The name must be at least 2 characters."
+                      ],
+                      "email": [
+                        "The email must be a valid email address."
+                      ],
+                      "phone": [
+                        "Invalid phone number. Phone number should start with +380 and follow by 9 digits.",
+                        "Invalid prefix. It should be one of: 44, 45, 48, 32, 50, 66, 95, 99, 63, 73, 93, 67, 68, 96, 97, 98, 91, 92, 94"
+                      ],
+                      "position_id": [
+                        "The position id field is required."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success": false,
+                    "message": "The token expired."
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Confict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success": false,
+                    "message": "User with this phone or email already exist"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success": false,
+                    "message": "Internal Server Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "operationId": "get_user",
+        "tags": [
+          "Routes"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success": true,
+                    "user": {
+                      "id": 48,
+                      "name": "Yevhenii",
+                      "email": "yevhenii@example.com",
+                      "phone": "+380630000000",
+                      "position_id": 1,
+                      "registration_timestamp": "1708635749753",
+                      "photo": "${API_URL}/api/v1/images/users/1708635749752-543707972.jpg"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success": false,
+                    "message": "Validation failed",
+                    "fails": {
+                      "user_id": [
+                        "The user_id must be an integer."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success": false,
+                    "message": "The user with the requested identifier does not exist",
+                    "fails": {
+                      "user_id": [
+                        "User not found"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success": false,
+                    "message": "Internal Server Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/positions": {
+      "get": {
+        "operationId": "get_positions",
+        "tags": [
+          "Routes"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success" : true,
+                    "positions" : [
+                      {
+                        "id": 1,
+                        "name": "Security"
+                      },
+                      {
+                        "id": 2,
+                        "name": "Designer"
+                      },
+                      {
+                        "id": 3,
+                        "name": "Content manager"
+                      },
+                      {
+                        "id": 4,
+                        "name": "Lawyer"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "object",
+                  "example": {
+                    "success": false,
+                    "message": "Internal Server Error"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "API - Test Assignment for vacancy",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ]
+}
