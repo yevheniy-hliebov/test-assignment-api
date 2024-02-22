@@ -18,6 +18,8 @@ const HttpExceptionFilter = async (err: HttpException | Error, req: Request, res
     exceptionResponse.fails = fails;
   }
 
+  // console.log(err);
+
   res.status(status).json(exceptionResponse);
 }
 

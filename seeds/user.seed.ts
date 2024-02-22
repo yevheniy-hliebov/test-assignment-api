@@ -20,7 +20,6 @@ function getRandomUnixTimestamp() {
 }
 
 type UserData = {
-  id: number;
   name: string;
   email: string;
   phone: string;
@@ -29,7 +28,7 @@ type UserData = {
   photo: string;
 }
 
-function generateUserData(id: number): UserData {
+function generateUserData(): UserData {
   const name = faker.person.firstName();
   const email = name.toLowerCase() + '.' + faker.person.lastName().toLowerCase() + '@example.com';
   const phone = generateRandomUkrainianPhoneNumber();
@@ -38,7 +37,6 @@ function generateUserData(id: number): UserData {
   const photo = faker.image.avatar();
 
   return {
-    id,
     name,
     email,
     phone,
@@ -52,7 +50,7 @@ export async function seed(knex: Knex): Promise<void> {
   await knex('users').del();
   const users: Array<Object> = [];
   for (let i = 0; i < 45; i++) {
-    const user = generateUserData(i + 1);
+    const user = generateUserData();
     users.push(user);
   }
 
